@@ -1,0 +1,34 @@
+<x-layout>
+    <h2>{{ session('message') }}</h2>
+
+    {{--    如果没有权限不让更新--}}
+    @can('update',$ninjas)
+        <h2>编辑</h2>
+    @endcan
+    {{--    如果没有权限不让删除--}}
+    @can('delete',$ninjas)
+        <h2>删除</h2>
+    @endcan
+
+    @if($greeting == 'hi')
+        <ul>
+            @foreach($ninjas as $ninja)
+                <li>
+                    <div>
+                        {{--                        <x-card href="/ninjas/{{ $ninja['id'] }}" :highlight="true">--}}
+                        <x-detail href="{{ route('ninjas.show',$ninja) }}" :highlight="$ninja['skill'] > 50">
+                            <h3>{{ $ninja['name'] }}</h3>
+                            <div>
+                                <p>{{ $ninja->dojo->name }}</p>
+                                <a href="{{ route('ninjas.edit',$ninja) }}">点击去编辑</a>
+                            </div>
+                        </x-detail>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+
+        {{--                通过数据对象 调用links 方法 显示数据码 --}}
+        {{ $ninjas->links() }}
+    @endif
+</x-layout>

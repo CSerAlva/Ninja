@@ -1,0 +1,74 @@
+/** T0开始
+ * Axios 是一个基于 promise 的网络请求库，可以用于 浏览器 和 node.js
+ * */
+import axios from 'axios';
+window.axios = axios;
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+/** T0结束 */
+
+/** Alex */
+import 'bootstrap';
+
+/** laravel-echo 默认
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+import Echo from 'laravel-echo';
+    // import Pusher from 'pusher-js';
+    // window.Pusher = Pusher;
+    // window.io = require('socket.io-client');
+        //Zy 控制台中不出现任何内容, 是要注释掉的。Leo Zy
+            //广播系统中 自带的 socket.io-client 版本太高，与 laravel-echo-server 版本不兼容，注释掉。 Zy
+
+    // window.Echo = new Echo({
+    //     broadcaster: 'pusher',
+    //     host: window.location.hostname + ':6001',
+    //     key: import.meta.env.VITE_PUSHER_APP_KEY,
+    //     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'mt1',
+    //     wsHost: import.meta.env.VITE_PUSHER_HOST ?? `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
+    // key: process.env.MIX_PUSHER_APP_KEY,
+    // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+
+    //     wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
+    //     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
+    //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
+    // });
+
+/**
+ * laravel-echo Alex
+ * */
+import {io} from 'socket.io-client';
+window.io=io;
+
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
+});
+
+/*
+公有频道 zy messages.blade.php, Leo countryside.blade.php
+*/
+// window.Echo.channel('countryside')  //Leo
+//     .listen('Free_Leo', (e) => {
+//         console.log(e);
+// });
+
+/*
+私有频道 Leo 设置客户端监听广播 Leo 私有频道
+*/
+window.Echo.private('three_good_Leo')
+    // Echo.private('three_good')
+    .listen('Prize_Leo', (e) => {
+        console.log(e);
+    });
+//6.监听多个事件 .listen(...).listen(...).listen(...); Leo
+
+
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: window.location.hostname + ':6001',
+//     authEndpoint: '/custom/endpoint/auth', //3.自定义授权端点 (默认 broadcasting/auth) Leo
+//     namespace: 'APP.Other.Namespace' //8.定制命名空间 (默认 App\Event) Leo
+// });
