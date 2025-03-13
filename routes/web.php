@@ -21,6 +21,7 @@ use App\Http\Controllers\RabbitMQController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//master
 Route::get('/', function () {
     return view('welcome');
 });
